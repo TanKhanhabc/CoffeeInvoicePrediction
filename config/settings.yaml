@@ -1,0 +1,10 @@
+project:
+  name: coffee-invoice-forecast
+  target: invoice_count
+  date_column: timestamp
+  shift_column: shift
+  holiday_column: is_holiday
+model:
+  type: RandomForestRegressor
+  random_state: 42
+  n_estimators: 200
