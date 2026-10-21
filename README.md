@@ -53,3 +53,33 @@ The baseline model aggregates the count by `date + shift`, with `is_holiday` cal
 
 ## Team workflow
 See `docs/TEAM_ASSIGNMENT.md`. Each member owns separate folders/modules and can work concurrently against the documented API contract.
+
+# Task thành viên 2 — Phạm Tấn Khánh (ML & Evaluation)
+
+Các file chỉ nằm trong phạm vi thành viên 2 được phân công. **Chép đè các file này vào đúng đường dẫn trong repo `CoffeeInvoicePrediction`** (đừng xóa file của các thành viên khác).
+
+### Cách chạy trên Windows PowerShell (tại gốc repo)
+```powershell
+cd backend
+pip install -r requirements.txt
+cd ..
+python results/run_evaluation.py
+```
+
+Đầu ra:
+- `results/evaluation_metrics.json`: MAE, RMSE và khoảng ngày train/test.
+- `models/invoice_count_rf.joblib`: mô hình huấn luyện toàn bộ lịch sử.
+- `results/ML_REPORT.md`: giải thích pipeline và hạn chế.
+- `notebooks/ML_Experiment.ipynb`: notebook thử nghiệm.
+
+Dữ liệu nguồn của dự án phải nằm tại `data/raw/coffee_shop_sales.csv`. Nếu chạy thiếu dữ liệu sẽ báo lỗi rõ ràng. **Không tự điền số MAE/RMSE không có dữ liệu thật**.
+
+### Git branch
+```powershell
+git switch -c feature/member-2-ml
+git add backend/app/ml/model_service.py notebooks/ML_Experiment.ipynb models/.gitkeep results/run_evaluation.py results/ML_REPORT.md results/.gitkeep
+git commit -m "feat(ml): chronological evaluation and invoice prediction"
+git push -u origin feature/member-2-ml
+```
+
+`results/evaluation_metrics.json` và `models/invoice_count_rf.joblib` là output sinh từ dữ liệu thực; hãy kiểm tra `.gitignore` của dự án trước khi quyết định commit các file đó.
