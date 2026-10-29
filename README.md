@@ -2,7 +2,7 @@
 
 Starter monorepo for predicting the number of coffee-shop invoices by date and work shift.
 Includes a React frontend, FastAPI backend, basic ML baseline, CSV dataset, tests, and docs.
-**Docker is intentionally not included yet.**
+Docker configuration is prepared, but has not been built or run.
 
 ## Features
 - Load and profile the supplied transaction CSV.
@@ -28,6 +28,14 @@ Includes a React frontend, FastAPI backend, basic ML baseline, CSV dataset, test
 - Python 3.11+
 - Node.js 20+
 - npm
+
+## Docker files (prepared, not run)
+- `backend/Dockerfile`: FastAPI service, running as a non-root user.
+- `frontend/Dockerfile` and `frontend/nginx.conf`: production frontend with `/api` proxied to the backend.
+- `docker-compose.yml`: frontend/backend services and persistent volumes for generated data and models.
+- `.dockerignore`: excludes local environments, caches, and generated artifacts from the build context.
+
+The prepared frontend address is `http://localhost:8080`. Docker has not been used to build or start these services.
 
 ## Run backend (Windows PowerShell)
 ```powershell
