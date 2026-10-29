@@ -4,16 +4,72 @@
   "train_end": "2023-10-19",
   "test_start": "2023-10-20",
   "test_end": "2023-12-31",
-  "train_rows": 1167,
-  "test_rows": 298,
+  "train_rows": 1168,
+  "test_rows": 292,
   "baseline_shift_mean": {
-    "MAE": 3.6967,
-    "RMSE": 5.0778
+    "MAE": 3.7937,
+    "RMSE": 5.2618
   },
   "random_forest": {
-    "MAE": 3.4519,
-    "RMSE": 5.1617
+    "MAE": 3.4203,
+    "RMSE": 4.9149
+  },
+  "tuning": {
+    "selected_model": "rf_leaf2_depth6",
+    "selection_metric": "MAE",
+    "cv_mae": {
+      "baseline_shift_mean": 3.7473181334834553,
+      "rf_leaf2_depth6": 2.8758536797158425,
+      "rf_leaf2_depthNone": 2.8909396924105835,
+      "rf_leaf8_depth6": 2.935028694743295,
+      "rf_leaf8_depthNone": 2.932728009343441,
+      "rf_leaf20_depth6": 3.006640006606521,
+      "rf_leaf20_depthNone": 3.00652077583759
+    },
+    "folds": [
+      {
+        "train_end": "2023-03-14",
+        "validation_start": "2023-03-15",
+        "validation_end": "2023-05-26"
+      },
+      {
+        "train_end": "2023-05-26",
+        "validation_start": "2023-05-27",
+        "validation_end": "2023-08-07"
+      },
+      {
+        "train_end": "2023-08-07",
+        "validation_start": "2023-08-08",
+        "validation_end": "2023-10-19"
+      }
+    ],
+    "selected_params": {
+      "min_samples_leaf": 2,
+      "max_depth": 6
+    }
+  },
+  "optimized": {
+    "MAE": 3.1858,
+    "RMSE": 4.5935
+  },
+  "optimized_by_shift": {
+    "Night": {
+      "MAE": 1.7298,
+      "RMSE": 2.2427
+    },
+    "Morning": {
+      "MAE": 4.927,
+      "RMSE": 6.4916
+    },
+    "Afternoon": {
+      "MAE": 4.183,
+      "RMSE": 5.5801
+    },
+    "Evening": {
+      "MAE": 1.9034,
+      "RMSE": 2.4688
+    }
   },
   "rf_beats_baseline_mae": true,
-  "rf_beats_baseline_rmse": false
+  "rf_beats_baseline_rmse": true
 }
