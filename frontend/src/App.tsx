@@ -376,7 +376,7 @@ export default function App() {
         {chatOpen ? '×' : <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z" /><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01" /></svg>}
       </button>
 
-      <footer><span className="footer-brand">coffee<span>forecast</span></span><span>Được xây dựng với React, FastAPI &amp; machine learning</span></footer>
+      <footer><span className="footer-brand">coffee<span>forecast</span></span></footer>
     </main>
   )
 }
