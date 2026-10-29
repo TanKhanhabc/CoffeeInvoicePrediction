@@ -10,6 +10,8 @@ from app.services.data_service import (
     aggregate_invoice_counts,
     enrich,
     get_data_profile,
+    # temp eda
+    get_eda_summary,
     load_enriched_data,
     shift_from_hour,
 )
@@ -208,6 +210,22 @@ def test_invalid_holiday_mode_raises():
 def test_aggregate_empty_frame():
     empty = enrich(make_raw([(1, "bad", None)]))
     assert aggregate_invoice_counts(empty).empty
+
+
+# ----------------------------- eda -------------------------------------- #
+def test_eda_summary_collects_key_insights():
+    raw = make_raw([
+        (1, "2023-12-25 08:00:00", "Christmas Day"),
+        (2, "2023-12-25 12:00:00", None),
+        (3, "2023-12-26 09:00:00", "Boxing Day"),
+        (4, "2023-12-26 18:00:00", None),
+    ])
+    summary = get_eda_summary(enrich(raw))
+    assert summary["rows"] == 4
+    assert summary["shift_distribution"]["Morning"] == 2
+    assert summary["holiday_share_pct"] == pytest.approx(50.0)
+    assert summary["top_products"] == []
+    assert summary["day_of_week_distribution"]["Monday"] == 2
 
 
 # ----------------------------- profile ----------------------------------- #

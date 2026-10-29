@@ -10,6 +10,7 @@ Includes a React frontend, FastAPI backend, basic ML baseline, CSV dataset, test
   `Afternoon` (12:00–16:59), `Evening` (17:00–23:59).
 - Derive `is_holiday` as a boolean: `true` when `holiday_name` is populated, otherwise `false`.
 - Aggregate transactions into daily invoice counts by shift.
+- Run an EDA summary over the transaction dataset and export a markdown report.
 - Train a Random Forest baseline and expose prediction/analytics APIs.
 - React dashboard with summary cards, prediction form, and historical chart/table.
 
@@ -37,6 +38,10 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 API docs: http://127.0.0.1:8000/docs
+
+## Generate EDA report
+Open the notebook at `notebooks/exploratory/eda.ipynb` and run all cells.
+It writes the dataset overview to `notebooks/exploratory/EDA_REPORT.md` and includes shift/day-of-week/holiday patterns from the real CSV data.
 
 ## Run frontend (new terminal)
 ```powershell

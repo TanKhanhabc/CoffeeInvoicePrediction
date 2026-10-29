@@ -1,11 +1,15 @@
 from fastapi import APIRouter
-from app.services.data_service import load_enriched_data, get_data_profile
+from app.services.data_service import get_eda_summary, get_data_profile, load_enriched_data
 
 router = APIRouter(prefix="/api", tags=["data"])
 
 @router.get("/data-profile")
 def data_profile():
     return get_data_profile(load_enriched_data())
+""" temp eda """
+@router.get("/eda")
+def eda_summary():
+    return get_eda_summary(load_enriched_data())
 
 @router.get("/overview")
 def overview():

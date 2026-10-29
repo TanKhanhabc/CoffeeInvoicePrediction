@@ -49,3 +49,13 @@ def test_data_profile():
     """Kiểm thử route GET /api/data-profile"""
     response = client.get("/api/data-profile")
     assert response.status_code == 200
+
+""" temp eda """
+def test_eda_summary():
+    """Kiểm thử route GET /api/eda"""
+    response = client.get("/api/eda")
+    assert response.status_code == 200
+    data = response.json()
+    assert "shift_distribution" in data
+    assert "holiday_share_pct" in data
+    assert "top_products" in data

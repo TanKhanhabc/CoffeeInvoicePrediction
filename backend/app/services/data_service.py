@@ -252,6 +252,66 @@ def get_data_profile(df: pd.DataFrame) -> dict:
         profile["aggregate"] = {"error": str(exc)}
     return profile
 
+""" temp eda """
+def get_eda_summary(df: pd.DataFrame) -> dict:
+    """Return an EDA-ready summary with narrative-friendly metrics for APIs and reports."""
+    if df.empty:
+        return {
+            "rows": 0,
+            "date_start": None,
+            "date_end": None,
+            "shift_distribution": {s: 0 for s in SHIFT_ORDER},
+            "holiday_share_pct": 0.0,
+            "top_products": [],
+            "top_cities": [],
+            "day_of_week_distribution": {},
+            "sales_summary": {},
+        }
+
+    sales_summary = {}
+    if {"quantity", "unit_price"}.issubset(df.columns):
+        sales_summary = {
+            "quantity_mean": round(float(df["quantity"].mean()), 2),
+            "quantity_max": int(df["quantity"].max()),
+            "unit_price_mean": round(float(df["unit_price"].mean()), 2),
+            "unit_price_max": round(float(df["unit_price"].max()), 2),
+        }
+
+    day_week = {
+        "Monday": int((df["day_of_week"] == 0).sum()),
+        "Tuesday": int((df["day_of_week"] == 1).sum()),
+        "Wednesday": int((df["day_of_week"] == 2).sum()),
+        "Thursday": int((df["day_of_week"] == 3).sum()),
+        "Friday": int((df["day_of_week"] == 4).sum()),
+        "Saturday": int((df["day_of_week"] == 5).sum()),
+        "Sunday": int((df["day_of_week"] == 6).sum()),
+    }
+
+    summary = {
+        "rows": int(len(df)),
+        "date_start": str(df["date"].min()) if "date" in df.columns else None,
+        "date_end": str(df["date"].max()) if "date" in df.columns else None,
+        "unique_stores": int(df["store_id"].nunique()) if "store_id" in df.columns else 0,
+        "shift_distribution": {s: int((df["shift"] == s).sum()) for s in SHIFT_ORDER},
+        "holiday_share_pct": round(float(df["is_holiday"].mean() * 100), 2) if "is_holiday" in df.columns else 0.0,
+        "top_products": [],
+        "top_cities": [],
+        "day_of_week_distribution": day_week,
+        "sales_summary": sales_summary,
+    }
+
+    if "product_category" in df.columns:
+        summary["top_products"] = [
+            {"product": str(name), "count": int(count)}
+            for name, count in df["product_category"].value_counts().head(5).items()
+        ]
+    if "city" in df.columns:
+        summary["top_cities"] = [
+            {"city": str(name), "count": int(count)}
+            for name, count in df["city"].value_counts().head(5).items()
+        ]
+    return summary
+
 
 # --------------------------------------------------------------------------- #
 # CLI: regenerate data/processed/
