@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from app.ml import model_service as ml
+from app.ml import predict_model, train_model as ml
 
 
 def sample_data():
@@ -29,7 +29,7 @@ def test_saved_model_roundtrip(tmp_path, monkeypatch):
     monkeypatch.setattr(ml, "make_model", lambda: ml.RandomForestRegressor(
         n_estimators=5, n_jobs=1, random_state=42))
     path = ml.train_and_save(sample_data(), tmp_path / "model.joblib")
-    model = ml._load_saved_model(str(path))
+    model = predict_model._load_saved_model(str(path))
     assert model.predict(ml.feature_frame(sample_data())).tolist() == sample_data()["invoice_count"].tolist()
 
 

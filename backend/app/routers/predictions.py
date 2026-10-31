@@ -5,7 +5,7 @@ from enum import Enum
 router = APIRouter(prefix="/api", tags=["prediction"])
 
 try:
-    from app.ml.model_service import predict_count
+    from app.ml.predict_model import predict_count
     HAS_MODEL = True
 except ImportError:
     HAS_MODEL = False

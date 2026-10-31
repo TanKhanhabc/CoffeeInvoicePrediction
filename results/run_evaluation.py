@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
-from app.ml.model_service import build_training_data, evaluate_models, train_and_save
+from app.ml.train_model import build_training_data, evaluate_models, train_and_save
 
 
 def main():
