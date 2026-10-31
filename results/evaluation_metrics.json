@@ -21,8 +21,8 @@
       "baseline_shift_mean": 3.7473181334834553,
       "rf_leaf2_depth6": 2.8758536797158425,
       "rf_leaf2_depthNone": 2.8909396924105835,
-      "rf_leaf8_depth6": 2.935028694743295,
-      "rf_leaf8_depthNone": 2.932728009343441,
+      "rf_leaf8_depth6": 2.935028694743296,
+      "rf_leaf8_depthNone": 2.932728009343442,
       "rf_leaf20_depth6": 3.006640006606521,
       "rf_leaf20_depthNone": 3.00652077583759
     },

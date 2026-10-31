@@ -1,8 +1,10 @@
+import json
+
 import numpy as np
 import pandas as pd
 import pytest
 
-from app.ml import predict_model, train_model as ml
+from app.ml import evaluate_model as evaluation, predict_model, train_model as ml
 
 
 def sample_data():
@@ -15,9 +17,9 @@ def sample_data():
 
 
 def test_tuning_keeps_holdout_dates_out(monkeypatch):
-    monkeypatch.setattr(ml, "make_model", lambda: ml.RandomForestRegressor(
+    monkeypatch.setattr(evaluation, "make_model", lambda: ml.RandomForestRegressor(
         n_estimators=5, n_jobs=1, random_state=42))
-    report = ml.evaluate_models(sample_data())
+    report = evaluation.evaluate_models(sample_data())
     assert all(fold["train_end"] < fold["validation_start"] <=
                fold["validation_end"] < report["test_start"]
                for fold in report["tuning"]["folds"])
@@ -26,7 +28,7 @@ def test_tuning_keeps_holdout_dates_out(monkeypatch):
 
 
 def test_saved_model_roundtrip(tmp_path, monkeypatch):
-    monkeypatch.setattr(ml, "make_model", lambda: ml.RandomForestRegressor(
+    monkeypatch.setattr(evaluation, "make_model", lambda: ml.RandomForestRegressor(
         n_estimators=5, n_jobs=1, random_state=42))
     path = ml.train_and_save(sample_data(), tmp_path / "model.joblib")
     model = predict_model._load_saved_model(str(path))
@@ -43,4 +45,14 @@ def test_reject_invalid_counts(invalid):
 
 def test_split_requires_training_dates():
     with pytest.raises(ValueError, match="no training dates"):
-        ml.chronological_split(sample_data(), 0.999)
+        evaluation.chronological_split(sample_data(), 0.999)
+
+
+def test_save_evaluation_results_creates_json_file(tmp_path):
+    results = {"optimized": {"MAE": 1.25}, "status": "đạt"}
+    destination = evaluation.save_evaluation_results(
+        results, tmp_path / "nested" / "evaluation_metrics.json"
+    )
+
+    assert destination.exists()
+    assert json.loads(destination.read_text(encoding="utf-8")) == results
